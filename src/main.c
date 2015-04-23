@@ -103,7 +103,7 @@ int main (int argc, char  **argv){
 
 	//get the total number of reads if needed
 	if (total_records == 0) {
-		cerr << "The number of records in the file were not provided , counting records may be time consuming !" << endl;
+		cerr << "The number of records in the file were not provided, counting records may be time consuming !" << endl;
 		in = gzopen(file_s[0], "r"); 
 		record = kseq_init(in); // initialize kseq object
 		while ((l = kseq_read(record)) >= 0) {
@@ -144,13 +144,14 @@ int main (int argc, char  **argv){
 		//file_o[n] = new char[strlen(file_s[n])+strlen(suff)+1];
 		//strcpy (file_o[n] ,file_s[n]);
 		//strcat(file_o[n],suff);
-		
+		cerr << file_s[n] << " -> " << file_o[n] << endl;
+
 		// open output file stream //
 		ofstream file_out;
 		file_out.open(file_o[n]);
 	
 		//open our first file//
-		in = gzopen(file_s[0], "r");  //open file
+		in = gzopen(file_s[n], "r");  //open file
 		record = kseq_init(in); // initialize kseq object
 		int current_record_number = 0;  
 		while ((l = kseq_read(record)) >= 0) { // iterate over the file
