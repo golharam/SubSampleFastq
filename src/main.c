@@ -65,6 +65,7 @@ int main (int argc, char  **argv){
 			case 'o' :
 				file_o[file_p] = optarg;
 				file_p++;
+				break;
 			case 't' :
 				total_records = atoi(optarg);
 				break;
