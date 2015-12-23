@@ -44,15 +44,17 @@ int main (int argc, char  **argv){
 	int* records;
 	int* shuffled;
 	int total_needed = 0;
-    
 	char *file_s[2] = {0,0}; //empty array to hold file name(s)
 	int file_n = 0 ;// tracking number of files in
     
 	char *file_o[2] ={0,0}; //empty array for output file names
 	int file_p = 0;// tracking number of files out
 
+	int seed;
+	srand(time(NULL));	// set up the random number generator
+
 	char c;
-	while (	(c = getopt (argc, argv, "i:o:t:w:")) != -1) {
+	while (	(c = getopt (argc, argv, "i:o:s:t:w:")) != -1) {
 		switch(c) {
 			case '\1' : // text 
 				file_s[file_n] = optarg;
@@ -65,6 +67,10 @@ int main (int argc, char  **argv){
 			case 'o' :
 				file_o[file_p] = optarg;
 				file_p++;
+				break;
+			case 's' :
+				seed = atoi(optarg);
+				srand(seed);
 				break;
 			case 't' :
 				total_records = atoi(optarg);
@@ -127,7 +133,7 @@ int main (int argc, char  **argv){
   	for (l=0; l<total_records; ++l) {
 		records[l] = l;
 	}
-  	srand (time(NULL));
+  	//srand (time(NULL));
 
   	// Yates shuffle (random enough for us) //
   	for (l = total_records-1; l > 0 ; l--){
@@ -181,8 +187,9 @@ int main (int argc, char  **argv){
 
 void usage(){
 	cerr << endl <<"\tThis program randomly sub samples a fastq file" << endl << endl;
-	cerr << "\tUsage ./RandomSubFq -t <total reads> -w <request reads> -i <file1> -i <file2> -o <out1> -o <out2>" <<endl;
-	cerr << "\tFiles need to be in the fastq file and can be gzip compressed" << endl;
+	cerr << "\tUsage ./RandomSubFq -t <total reads> -w <request reads> -s <seed> -i <file1> -i <file2> -o <out1> -o <out2>" <<endl;
+	cerr << "\tFiles need to be in the fastq file and can be gzip compressed." << endl;
+	cerr << "\t\t-s random number generator seed to use." << endl;
 	cerr << "\t\t-t can be set with the total number of fastq records in the file (prefered as it keeps from looping over the file twice)." << endl;
 	cerr << "\t\t-w needs to be set to the total number of records you want from the file (must be less than total records)." << endl<<endl;
 	
